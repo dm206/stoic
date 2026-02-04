@@ -94,7 +94,7 @@ class activitiesModel extends ModelClass
 		{
 			$this->model = 'daysbytype';
 		
-			$conditions = "day >= '".$fromDate."' AND day < '".$toDate."'";
+			$conditions = "day >= '".$fromDate."' AND day <= '".$toDate."'";
 			$conditions .= !is_null($typeID) && ($typeID != 0)? " AND activitytype_id = "."'". $typeID. "'" : '';
 			$results = parent::find(array(
 				'conditions'=>$conditions,

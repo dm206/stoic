@@ -1,5 +1,6 @@
 <?php
 $distanceDecimals = isset($distanceDecimals) ? $distanceDecimals : DEFAULT_DECIMALS;
+$dateFormat = isset($dateFormat) ? $dateFormat : YMDDY;
 ?>
 <style>
   a:link
@@ -50,7 +51,7 @@ $distanceDecimals = isset($distanceDecimals) ? $distanceDecimals : DEFAULT_DECIM
         $distance = $r['activitytype_id'] == SWIMMING ? $r['yards'] : $r['miles'];
       ?>
         <tr style="font-weight:normal; border-bottom:1px solid black; border-top:1px solid black">
-          <td class="text-left" ><?=$this->html->link(date(YMD." D", strtotime($r['start_date_local'])), APP_NAME.'/activities/view/'.$r['id'])?></td>
+          <td class="text-left" ><?=$this->html->link(date($dateFormat, strtotime($r['start_date_local'])), APP_NAME.'/activities/view/'.$r['id'])?></td>
           <td class="text-left" ><?=$r['start_locality']?></td>
           <td class="text-center" ><?=isset($types[$r['activitytype_id']]['image']) ? $this->html->image(LOCATION_TYPEIMAGES.$types[$r['activitytype_id']]['image'],array('height'=>'20', 'width'=>'20')) : '&nbsp;'?></td>
           <td class="text-left" ><?=$r['name']?></td>

@@ -17,6 +17,7 @@ class ModelClass
    var $typeResults = array();
    var $limit = 20;
    var $idField = 'id';
+   var $db = "";
    const DEF_ORDER = 'id';
    const DEF_PAGE = 1;
    const DEF_LIMIT = 20;
@@ -29,7 +30,7 @@ class ModelClass
         $host = $this->config->default['host'];
         $user = $this->config->default['login'];
         $pass = $this->config->default['password'];
-         $db = $this->config->default['database'];
+         $db = $this->db == "" ? $this->config->default['database'] : $this->db;
          $dsn = 'mysql:host='.$host.';dbname='.$db;
          $this->connection = new mysqli($host, $user, $pass, $db);
          $name = get_class($this);

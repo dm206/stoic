@@ -27,6 +27,7 @@ class stravaComponent
       'Hike'=>HIKING,
       'Walk'=>WALKING,
       'OpenSwim'=>OPEN_SWIM,
+      'Ski'=>SKIING,
       'AlpineSki'=>SKIING,
       'Workout'=>WALKING,
       'Kayaking' => KAYAKING

@@ -23,6 +23,8 @@
 	define('MINUTES', 60);
 	//Date formats for use in php date function
 	define('YMD', 'Y-m-d');
+	define('YMDDY', 'Y-m-d D');
+	define('YMDDYHI', 'Y-m-d D H:i');
 	define('Y', 'Y');
 	define('MONTH', 'Y-m-01');
 	define('YEAR', 'Y-01-01');

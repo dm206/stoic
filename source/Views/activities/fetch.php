@@ -1,6 +1,6 @@
 <div class="row">
 <?php
-
+    $this->set('dateFormat', YMDDYHI);
   if (isset($recordList) && count($recordList))
   {
 ?>

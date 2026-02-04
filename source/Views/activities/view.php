@@ -15,7 +15,7 @@ if (isset($record))
 		$mapsEnabled = false;
 	}
 	
-	$pageTitle = date('Y-m-d, D	', strtotime($record['start_date_local'])).'';
+	$pageTitle = date('Y-m-d, D	H:i', strtotime($record['start_date_local'])).'';
 
 	//START: Navigation Links
 	$this->set('nextID',is_null($next) ? null : $next['id']);
@@ -24,11 +24,7 @@ if (isset($record))
 	$this->set('previousID',is_null($previous) ? null : $previous['id']);
 
 	$stravaLink = '';
-	if ($record['activity_id'] != '')
-	{
-		$stravaLink = $this->html->link('<button type="button" class="btn btn-secondary">&nbsp;'.$this->html->image(LOCATION_LOGOS.'strava.png', array('height'=>20, 'width'=>20,'style'=>'float:center')).'&nbsp;</button>','https://www.strava.com/activities/'.$record['activity_id'], array('escape'=>false, 'target'=>'_blank'));
-	}
-
+	
 	$navIMG = $this->html->image(LOCATION_ICONS.ICON_SEARCH,array('height'=>20, 'width'=>20,  'style'=>''));
 	$searchLink = $this->html->link('<button type="button" class="btn btn-secondary"  >&nbsp;'.$navIMG.'&nbsp;</button>','/rule10/activities/search/', array('escape'=>false));
 	//END: Navigation Links
@@ -68,7 +64,9 @@ if (isset($record))
 
 <div id="summary" class="row mb-5" style="">
 	<div class="col-5" style="margin-bottom:0px; padding-bottom:0px;">
-		<span style="font-size:24px;font-weight:275" class="mt-3"><?=$pageTitle?>:&nbsp;<?=$record['name']?></span>
+		<span style="font-size:24px;font-weight:275" class="mt-3"><?=$pageTitle?></span>
+		<br>
+		<span style="font-size:20px;font-weight:275" class=""><?=$record['name']?></span>
 		<p class="mt-3">
 			<?php
 			if ($record['description'] != '')
@@ -163,7 +161,7 @@ if (isset($record))
 						$this->set('chartType', 'Area');
 						$this->set('chartDiv', 'heartChart');
 							$unitsForTitle = DEFAULT_UNITS == UNITS_METRIC ? "(meters)" : "(feet)";
-						$this->set('title', 'Heart Rate ');
+						$this->set('title', 'Heart Rate: '.round($record['average_heartrate'],0).'/'.round($record['max_heartrate'],0));
 						$this->set('vAxisTitle', '');
 						$this->set('divHeight','90%');
 						$this->set('divWidth', '100%');
@@ -221,6 +219,11 @@ if (isset($record))
 							{
 								$value = json_encode($value);
 							}
+							if ($key == 'elapsed_time')
+							{
+
+								$value = $this->stopwatch->elapsed($value);
+							}
 							if (strstr($key, 'stream') || ($key == 'polyline') || (($key == 'summary_polyline')))
 							{
 								$value = 'stream';
@@ -237,18 +240,7 @@ if (isset($record))
 			</div>
 		</div>
 
-<?php
-		if ($this->app->countAlerts() > 0)
-		{
-?>
-			<div class="tab-pane fade" id="nav-alerts" role="tabpanel" aria-labelledby="nav-alerts-tab" tabindex="0">
-				<div class="row" >
-					<?=$this->element('alerts');?>
-				</div>
-			</div>
-<?php
-		}
-?>
+
 	</div>
 
 <?php

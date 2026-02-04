@@ -355,6 +355,7 @@ class activitiesController extends Controller
 	
   public function edit($id = null)
   {
+
     if ($this->request == POST)
     {
 
@@ -369,11 +370,14 @@ class activitiesController extends Controller
     	} else 
     	//UNITS_STATUTE
     	{ 
+
     		//if its statues and swimming than the distance is yards convert to meters.  if its statues and anything else its miles and is converted to meters
     		$this->data['distance'] = $this->data['activitytype_id'] == SWIMMING ? $this->data['distance'] * METERS_PER_YARD:  $this->data['distance']  * METERS_PER_MILE ;
+    			debug('statute '.	$this->data['distance'] );
+    			exit;
     	}
       $s = $this->activities->update( $this->data);
-      debug($this->data);
+
       $record = $this->activities->getByID($this->data['id']);
       if ($s)
       {
@@ -392,6 +396,8 @@ class activitiesController extends Controller
     	} else 
     	{
     		$record = $this->activities->getByID($id);
+
+    		
     	}
     }
     
@@ -490,8 +496,11 @@ class activitiesController extends Controller
   	if ($this->request == GET)
 		{
   		$this->fromDate = is_null($date) ? date('Y-m-d') : $date;
-  		$this->toDate = date("Y-m-d", strtotime($this->fromDate. " +1 day"));
-  		}
+  	} else {
+  		$this->fromDate = $this->data['currentDate'];
+  	}
+  	 $this->toDate = date("Y-m-d", strtotime($this->fromDate. " +1 day"));
+
   	
   	$records = $this->activities->find(array('conditions'=>'start_date_local >= "'.$this->fromDate.'" AND start_date_local < "'.$this->toDate.'"'));
   	$dayTotalsByType  = $this->activities->daysByType($this->fromDate, $this->toDate,$this->typeID);
@@ -509,7 +518,7 @@ class activitiesController extends Controller
 
   public function logbook($date = null, $typeID = null, $metric = null)
   {
-  		$weeksBack = 100;
+  		$weeksBack = 52;
 		if ($this->request == GET)
 
 		{
