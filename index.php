@@ -10,7 +10,7 @@ $alive = $today - strtotime($bday);
           <h1 class="mt-5 text-xxxl">dwm</h1><br>
           <h4>Best Human Inventions</h4>
           <ol>
-            <li>Ice Cream and Cheese 123</li>
+            <li>Ice Cream and Cheese</li>
             <li>The Zipper</li>
             <li>Velcro</li>
             <li>Post It Notes</li>
